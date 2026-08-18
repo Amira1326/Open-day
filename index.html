@@ -59,25 +59,31 @@
 
   /* ============ HOME SCREEN ============ */
   #screenHome{
-    background-image:
-      linear-gradient(to bottom, rgba(12,23,48,0) 62%, rgba(12,23,48,0.55) 100%),
-      url('ajyal-hero-laptop.png');
+    background:var(--navy-deep);
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    overflow-y:auto;
+  }
+  .hero-image{
+    width:100%;
+    aspect-ratio:16/9;
+    background-image:url('ajyal-hero-laptop.png');
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
-    position:relative;
+    flex-shrink:0;
   }
-  .cta-stack{
-    position:absolute;
-    bottom:6%;
-    left:50%;
-    transform:translateX(-50%);
+  .cta-strip{
+    flex:1;
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:14px;
-    width:100%;
-    padding:0 20px;
+    justify-content:center;
+    gap:16px;
+    padding:28px 20px 40px;
+    background:
+      linear-gradient(180deg, rgba(12,23,48,1) 0%, var(--navy-deep) 30%);
   }
   .path-hint{
     font-family:'Tajawal', sans-serif;
@@ -230,11 +236,9 @@
   /* ============ RESPONSIVE ============ */
   /* iPad (portrait & landscape) */
   @media (min-width: 601px) and (max-width: 1180px){
-    #screenHome{
-      background-image:
-        linear-gradient(to bottom, rgba(12,23,48,0) 62%, rgba(12,23,48,0.55) 100%),
-        url('ajyal-hero-ipad.png');
-      background-position:center;
+    .hero-image{
+      aspect-ratio:4/3;
+      background-image:url('ajyal-hero-ipad.png');
     }
     #screenForm{
       background-image:
@@ -246,11 +250,9 @@
   }
   /* Mobile phones */
   @media (max-width: 600px){
-    #screenHome{
-      background-image:
-        linear-gradient(to bottom, rgba(12,23,48,0) 62%, rgba(12,23,48,0.55) 100%),
-        url('ajyal-hero-mobile.png');
-      background-position:top center;
+    .hero-image{
+      aspect-ratio:941/1672;
+      background-image:url('ajyal-hero-mobile.png');
     }
     #screenForm{
       background-image:
@@ -258,7 +260,6 @@
         url('ajyal-hero-mobile.png');
       background-position:top center;
     }
-    .cta-stack{ bottom:6%; }
     .path-btn{ padding:14px 34px; }
   }
   @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
@@ -272,7 +273,8 @@
 
   <!-- ============ HOME SCREEN ============ -->
   <section id="screenHome" class="screen">
-    <div class="cta-stack">
+    <div class="hero-image"></div>
+    <div class="cta-strip">
       <div class="path-hint" data-i18n="hint">سجّل حضورك اليوم</div>
       <button class="path-btn" onclick="goTo('form')" data-i18n="cta">سجّل حضورك</button>
     </div>
