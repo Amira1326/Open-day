@@ -61,7 +61,7 @@
   #screenHome{
     background-image:
       linear-gradient(to bottom, rgba(12,23,48,0) 62%, rgba(12,23,48,0.55) 100%),
-      url('ajyal-hero.png');
+      url('ajyal-hero-laptop.png');
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
@@ -112,7 +112,7 @@
   #screenForm{
     background:
       linear-gradient(rgba(248,245,236,0.88), rgba(248,245,236,0.92)),
-      url('ajyal-hero.png');
+      url('ajyal-hero-laptop.png');
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
@@ -228,22 +228,38 @@
   }
 
   /* ============ RESPONSIVE ============ */
-  @media (max-width: 1180px){
+  /* iPad (portrait & landscape) */
+  @media (min-width: 601px) and (max-width: 1180px){
     #screenHome{
-      background-color:var(--navy-deep);
-      background-size:contain;
-      background-position:top center;
-      background-repeat:no-repeat;
+      background-image:
+        linear-gradient(to bottom, rgba(12,23,48,0) 62%, rgba(12,23,48,0.55) 100%),
+        url('ajyal-hero-ipad.png');
+      background-position:center;
     }
     #screenForm{
-      background-size:contain;
+      background-image:
+        linear-gradient(rgba(248,245,236,0.88), rgba(248,245,236,0.92)),
+        url('ajyal-hero-ipad.png');
+      background-position:center;
+    }
+    .card{ max-width:480px; padding:44px 40px 38px; }
+  }
+  /* Mobile phones */
+  @media (max-width: 600px){
+    #screenHome{
+      background-image:
+        linear-gradient(to bottom, rgba(12,23,48,0) 62%, rgba(12,23,48,0.55) 100%),
+        url('ajyal-hero-mobile.png');
+      background-position:top center;
+    }
+    #screenForm{
+      background-image:
+        linear-gradient(rgba(248,245,236,0.88), rgba(248,245,236,0.92)),
+        url('ajyal-hero-mobile.png');
       background-position:top center;
     }
     .cta-stack{ bottom:6%; }
     .path-btn{ padding:14px 34px; }
-  }
-  @media (min-width: 768px) and (max-width: 1180px){
-    .card{ max-width:480px; padding:44px 40px 38px; }
   }
   @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
 </style>
