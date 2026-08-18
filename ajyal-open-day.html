@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ajyal Al Marefaah | Open House 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#14213D;
+    --navy-deep:#0C1730;
+    --gold:#C9A227;
+    --gold-soft:#E4C766;
+    --cream:#F8F5EC;
+    --ink:#1E2433;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html, body{ height:100%; }
+  body{
+    font-family:'Tajawal', sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    overflow-x:hidden;
+  }
+  body.lang-en{ font-family:'Poppins', sans-serif; }
+
+  /* ============ APP SHELL ============ */
+  .app{ position:relative; width:100%; min-height:100vh; min-height:100dvh; }
+  .screen{
+    position:absolute; inset:0; width:100%;
+    min-height:100vh; min-height:100dvh;
+    display:flex; flex-direction:column;
+    opacity:1; transform:translateX(0);
+    transition:opacity .45s ease, transform .45s ease;
+  }
+  .screen.hidden{ opacity:0; pointer-events:none; }
+  #screenHome.hidden{ transform:translateX(6%); }
+  #screenForm{ transform:translateX(6%); opacity:0; pointer-events:none; }
+  #screenForm.active{ transform:translateX(0); opacity:1; pointer-events:auto; }
+
+  /* ============ LANGUAGE TOGGLE ============ */
+  .lang-toggle{
+    position:fixed;
+    top:18px; left:18px;
+    z-index:50;
+    background:rgba(255,255,255,0.94);
+    color:var(--navy);
+    font-family:'Tajawal', sans-serif;
+    font-weight:700;
+    font-size:13px;
+    padding:9px 18px;
+    border-radius:100px;
+    cursor:pointer;
+    box-shadow:0 4px 14px rgba(0,0,0,0.15);
+    display:flex; align-items:center; gap:6px;
+    border:1px solid rgba(20,33,61,0.1);
+  }
+
+  /* ============ HOME SCREEN ============ */
+  #screenHome{
+    background-image:
+      linear-gradient(to bottom, rgba(12,23,48,0) 62%, rgba(12,23,48,0.55) 100%),
+      url('ajyal-hero.png');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    position:relative;
+  }
+  .cta-stack{
+    position:absolute;
+    bottom:6%;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+    width:100%;
+    padding:0 20px;
+  }
+  .path-hint{
+    font-family:'Tajawal', sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:.5px;
+    color:var(--navy);
+    background:rgba(255,255,255,0.92);
+    padding:7px 18px;
+    border-radius:100px;
+  }
+  .path-btn{
+    appearance:none; border:none; cursor:pointer;
+    font-family:'Tajawal', sans-serif;
+    background:linear-gradient(135deg, var(--gold-soft), var(--gold));
+    color:var(--navy-deep);
+    font-size:clamp(17px, 2.6vw, 21px);
+    font-weight:900;
+    padding:16px 44px;
+    border-radius:100px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    box-shadow:0 12px 28px -8px rgba(0,0,0,0.45);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  body.lang-en .path-btn, body.lang-en .path-hint{ font-family:'Poppins', sans-serif; }
+  .path-btn:hover{ transform:translateY(-2px); box-shadow:0 16px 32px -8px rgba(0,0,0,0.5); }
+  .path-btn:active{ transform:translateY(1px); }
+
+  /* ============ FORM SCREEN ============ */
+  #screenForm{
+    background:
+      linear-gradient(rgba(248,245,236,0.88), rgba(248,245,236,0.92)),
+      url('ajyal-hero.png');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    justify-content:flex-start;
+    align-items:center;
+    padding:88px 18px 48px;
+    overflow-y:auto;
+  }
+  .back-btn{
+    position:fixed;
+    top:18px; right:18px;
+    background:#fff;
+    border:1px solid rgba(20,33,61,0.12);
+    color:var(--navy);
+    font-family:'Tajawal', sans-serif;
+    font-weight:700;
+    font-size:14px;
+    padding:9px 18px;
+    border-radius:100px;
+    cursor:pointer;
+    z-index:50;
+  }
+  .card{
+    background:#fff;
+    width:100%;
+    max-width:440px;
+    border-radius:20px;
+    padding:38px 30px 32px;
+    box-shadow:0 24px 60px -18px rgba(20,33,61,0.3);
+    border-top:5px solid var(--gold);
+    position:relative;
+  }
+  .card h1{
+    font-family:'Tajawal', sans-serif;
+    font-weight:900;
+    font-size:clamp(23px, 5vw, 28px);
+    color:var(--navy);
+    text-align:center;
+    margin-bottom:6px;
+  }
+  body.lang-en .card h1{ font-family:'Poppins', sans-serif; }
+  .card p.sub{
+    text-align:center; font-size:14px;
+    color:rgba(30,36,51,0.6); margin-bottom:26px;
+  }
+  .field{ margin-bottom:16px; }
+  .field label{
+    display:block; font-size:13.5px; font-weight:700;
+    margin-bottom:7px; color:var(--navy);
+  }
+  .field input, .field select{
+    width:100%;
+    font-family:inherit;
+    font-size:15.5px; font-weight:500;
+    padding:14px 18px;
+    border-radius:12px;
+    border:1.5px solid #E4E1D6;
+    background:#FBFAF5;
+    color:var(--ink);
+    outline:none;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .field input:focus, .field select:focus{ border-color:var(--gold); background:#fff; }
+  .field select{
+    appearance:none; cursor:pointer;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%2314213D' stroke-width='2' fill='none' stroke-linecap='round'/></svg>");
+    background-repeat:no-repeat; background-position:left 18px center;
+  }
+  html[dir="ltr"] .field select{ background-position:right 18px center; }
+  .submit-btn{
+    appearance:none; border:none; cursor:pointer; width:100%;
+    font-family:'Tajawal', sans-serif;
+    background:var(--navy);
+    color:#fff; font-size:18px; font-weight:800;
+    padding:16px; border-radius:14px; margin-top:8px;
+    box-shadow:0 6px 0 var(--navy-deep);
+    transition:transform .12s ease, box-shadow .12s ease, opacity .15s ease;
+  }
+  body.lang-en .submit-btn{ font-family:'Poppins', sans-serif; }
+  .submit-btn:hover{ transform:translateY(2px); box-shadow:0 4px 0 var(--navy-deep); }
+  .submit-btn:disabled{ opacity:.6; cursor:not-allowed; }
+  .error-box{
+    display:none;
+    background:rgba(198,60,50,0.08); color:#B23A2E;
+    border:1.5px solid rgba(198,60,50,0.25);
+    padding:11px 14px; border-radius:12px;
+    font-size:13.5px; font-weight:700; text-align:center;
+    margin-top:14px;
+  }
+  .error-box.show{ display:block; }
+
+  /* ============ SUCCESS ============ */
+  .success{ display:none; text-align:center; }
+  .success.show{ display:block; animation:pop .4s ease; }
+  @keyframes pop{ from{opacity:0; transform:scale(.9);} to{opacity:1; transform:scale(1);} }
+  .stamp{
+    width:78px; height:78px; border-radius:50%;
+    background:var(--gold); color:var(--navy-deep);
+    display:flex; align-items:center; justify-content:center;
+    font-size:36px; margin:6px auto 18px;
+    box-shadow:0 0 0 6px rgba(201,162,39,0.18);
+  }
+  .success h2{
+    font-family:'Tajawal', sans-serif;
+    font-weight:900; font-size:23px; color:var(--navy); margin-bottom:8px;
+  }
+  body.lang-en .success h2{ font-family:'Poppins', sans-serif; }
+  .success p{ font-size:14.5px; color:rgba(30,36,51,0.65); line-height:1.8; margin-bottom:20px;}
+  .again-btn{
+    appearance:none; border:1.5px solid var(--navy); background:#fff; color:var(--navy);
+    font-family:inherit; font-weight:700; font-size:14px;
+    padding:11px 22px; border-radius:100px; cursor:pointer;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 600px){
+    .cta-stack{ bottom:8%; }
+    .path-btn{ padding:14px 34px; }
+  }
+  @media (min-width: 768px) and (max-width: 1180px){
+    .card{ max-width:480px; padding:44px 40px 38px; }
+  }
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body id="bodyRoot">
+
+<button class="lang-toggle" onclick="toggleLang()" id="langToggle">English</button>
+
+<div class="app">
+
+  <!-- ============ HOME SCREEN ============ -->
+  <section id="screenHome" class="screen">
+    <div class="cta-stack">
+      <div class="path-hint" data-i18n="hint">سجّل حضورك اليوم</div>
+      <button class="path-btn" onclick="goTo('form')" data-i18n="cta">سجّل حضورك</button>
+    </div>
+  </section>
+
+  <!-- ============ FORM SCREEN ============ -->
+  <section id="screenForm" class="screen">
+    <button class="back-btn" onclick="goTo('home')" data-i18n="back">رجوع</button>
+
+    <div class="card">
+      <div id="formWrap">
+        <h1 data-i18n="formTitle">سجّل حضورك</h1>
+        <p class="sub" data-i18n="formSub">عبّي بياناتك عشان نستقبلك في اليوم المفتوح</p>
+
+        <form id="attendanceForm">
+          <div class="field">
+            <label for="parentName" data-i18n="labelParent">اسم ولي الأمر</label>
+            <input type="text" id="parentName" required>
+          </div>
+          <div class="field">
+            <label for="phone" data-i18n="labelPhone">رقم الجوال</label>
+            <input type="tel" id="phone" placeholder="05xxxxxxxx" pattern="^05[0-9]{8}$" required>
+          </div>
+          <div class="field">
+            <label for="childName" data-i18n="labelChild">اسم الطفل</label>
+            <input type="text" id="childName" required>
+          </div>
+          <div class="field">
+            <label for="stage" data-i18n="labelStage">المرحلة الدراسية</label>
+            <select id="stage" required>
+              <option value="" disabled selected data-i18n="stagePlaceholder">اختر المرحلة</option>
+              <option value="Pre-KG">Pre-KG</option>
+              <option value="KG I">KG I</option>
+              <option value="KG II">KG II</option>
+              <option value="Grade 1">Grade 1</option>
+              <option value="Grade 2">Grade 2</option>
+              <option value="Grade 3">Grade 3</option>
+              <option value="Grade 4">Grade 4</option>
+              <option value="Grade 5">Grade 5</option>
+              <option value="Grade 6">Grade 6</option>
+              <option value="Grade 7">Grade 7</option>
+              <option value="Grade 8">Grade 8</option>
+              <option value="Grade 9">Grade 9</option>
+              <option value="Grade 10">Grade 10</option>
+              <option value="Grade 11">Grade 11</option>
+              <option value="Grade 12">Grade 12</option>
+              <option value="زائر" data-i18n="stageVisitor">زائر</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="adultsCount" data-i18n="labelAdults">عدد البالغين</label>
+            <input type="number" id="adultsCount" min="0" step="1" placeholder="0" required>
+          </div>
+          <div class="field">
+            <label for="kidsCount" data-i18n="labelKids">عدد الأطفال</label>
+            <input type="number" id="kidsCount" min="0" step="1" placeholder="0" required>
+          </div>
+
+          <div class="error-box" id="errorBox" data-i18n="errorMsg">صار خطأ في الإرسال، تأكد من الإنترنت وحاول مرة ثانية.</div>
+          <button type="submit" class="submit-btn" id="submitBtn" data-i18n="confirm">تأكيد الحضور</button>
+        </form>
+      </div>
+
+      <div class="success" id="successBox">
+        <div class="stamp">✓</div>
+        <h2 data-i18n="successTitle">تم التسجيل بنجاح</h2>
+        <p data-i18n="successMsg">يسعدنا استقبالكم في اليوم المفتوح 🎉</p>
+        <button class="again-btn" onclick="resetForm()" data-i18n="again">تسجيل عائلة أخرى</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  /* ============ I18N ============ */
+  const I18N = {
+    ar:{
+      hint:"سجّل حضورك اليوم",
+      cta:"سجّل حضورك",
+      back:"رجوع",
+      formTitle:"سجّل حضورك",
+      formSub:"عبّي بياناتك عشان نستقبلك في اليوم المفتوح",
+      labelParent:"اسم ولي الأمر",
+      labelPhone:"رقم الجوال",
+      labelChild:"اسم الطفل",
+      labelStage:"المرحلة الدراسية",
+      stagePlaceholder:"اختر المرحلة",
+      stageVisitor:"زائر",
+      labelAdults:"عدد البالغين",
+      labelKids:"عدد الأطفال",
+      errorMsg:"صار خطأ في الإرسال، تأكد من الإنترنت وحاول مرة ثانية.",
+      confirm:"تأكيد الحضور",
+      successTitle:"تم التسجيل بنجاح",
+      successMsg:"يسعدنا استقبالكم في اليوم المفتوح 🎉",
+      again:"تسجيل عائلة أخرى",
+      toggleLabel:"English"
+    },
+    en:{
+      hint:"Register your attendance",
+      cta:"Register Now",
+      back:"Back",
+      formTitle:"Register Now",
+      formSub:"Fill in your details and we'll welcome you at Open House",
+      labelParent:"Parent's Name",
+      labelPhone:"Mobile Number",
+      labelChild:"Child's Name",
+      labelStage:"Grade Level",
+      stagePlaceholder:"Select grade level",
+      stageVisitor:"Visitor",
+      labelAdults:"Number of Adults",
+      labelKids:"Number of Children",
+      errorMsg:"Something went wrong. Check your connection and try again.",
+      confirm:"Confirm Attendance",
+      successTitle:"You're registered!",
+      successMsg:"We're excited to welcome you at Open House 🎉",
+      again:"Register another family",
+      toggleLabel:"العربية"
+    }
+  };
+
+  let currentLang = 'ar';
+
+  function applyLang(lang){
+    currentLang = lang;
+    const dict = I18N[lang];
+    document.getElementById('htmlRoot').setAttribute('lang', lang);
+    document.getElementById('htmlRoot').setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    document.getElementById('bodyRoot').classList.toggle('lang-en', lang === 'en');
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if(dict[key] !== undefined) el.textContent = dict[key];
+    });
+    document.getElementById('phone').placeholder = "05xxxxxxxx";
+    document.getElementById('langToggle').textContent = dict.toggleLabel;
+  }
+
+  function toggleLang(){
+    applyLang(currentLang === 'ar' ? 'en' : 'ar');
+  }
+
+  applyLang('ar');
+
+  /* ============ NAVIGATION ============ */
+  function goTo(screen){
+    const home = document.getElementById('screenHome');
+    const form = document.getElementById('screenForm');
+    if(screen === 'form'){
+      home.classList.add('hidden');
+      form.classList.add('active');
+    } else {
+      home.classList.remove('hidden');
+      form.classList.remove('active');
+    }
+  }
+
+  /* =========================================================================
+     ⚙️ اربط الفورم بجوجل من هنا (بدّل القيم):
+     ========================================================================= */
+  const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/e/PASTE_YOUR_FORM_ID_HERE/formResponse";
+  const ENTRY_IDS = {
+    parentName: "entry.111111111",
+    phone:      "entry.222222222",
+    childName:  "entry.333333333",
+    stage:      "entry.444444444",
+    adultsCount:"entry.555555555",
+    kidsCount:  "entry.666666666"
+  };
+  /* ========================================================================= */
+
+  const form = document.getElementById('attendanceForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const successBox = document.getElementById('successBox');
+  const errorBox = document.getElementById('errorBox');
+  const formWrap = document.getElementById('formWrap');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorBox.classList.remove('show');
+    submitBtn.disabled = true;
+    submitBtn.textContent = currentLang === 'ar' ? "جارِ الإرسال..." : "Sending...";
+
+    const data = new URLSearchParams();
+    data.append(ENTRY_IDS.parentName, document.getElementById('parentName').value);
+    data.append(ENTRY_IDS.phone, document.getElementById('phone').value);
+    data.append(ENTRY_IDS.childName, document.getElementById('childName').value);
+    data.append(ENTRY_IDS.stage, document.getElementById('stage').value);
+    data.append(ENTRY_IDS.adultsCount, document.getElementById('adultsCount').value);
+    data.append(ENTRY_IDS.kidsCount, document.getElementById('kidsCount').value);
+
+    try{
+      await fetch(GOOGLE_FORM_ACTION_URL, { method:'POST', mode:'no-cors', body:data });
+      formWrap.style.display = 'none';
+      successBox.classList.add('show');
+    } catch(err){
+      errorBox.classList.add('show');
+      submitBtn.disabled = false;
+      submitBtn.textContent = I18N[currentLang].confirm;
+    }
+  });
+
+  function resetForm(){
+    form.reset();
+    formWrap.style.display = 'block';
+    successBox.classList.remove('show');
+    submitBtn.disabled = false;
+    submitBtn.textContent = I18N[currentLang].confirm;
+  }
+</script>
+
+</body>
+</html>
