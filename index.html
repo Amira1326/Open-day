@@ -62,28 +62,28 @@
     background:var(--navy-deep);
     display:flex;
     flex-direction:column;
-    justify-content:flex-start;
-    overflow-y:auto;
+    height:100vh;
+    height:100dvh;
+    overflow:hidden;
   }
   .hero-image{
     width:100%;
-    aspect-ratio:16/9;
+    flex:1 1 auto;
+    min-height:0;
     background-image:url('ajyal-hero-laptop.png');
-    background-size:cover;
-    background-position:center;
+    background-size:contain;
+    background-position:center center;
     background-repeat:no-repeat;
-    flex-shrink:0;
   }
   .cta-strip{
-    flex:1;
+    flex:0 0 auto;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:16px;
-    padding:28px 20px 40px;
-    background:
-      linear-gradient(180deg, rgba(12,23,48,1) 0%, var(--navy-deep) 30%);
+    gap:12px;
+    padding:16px 20px;
+    background:var(--navy-deep);
   }
   .path-hint{
     font-family:'Tajawal', sans-serif;
@@ -237,7 +237,6 @@
   /* iPad (portrait & landscape) */
   @media (min-width: 601px) and (max-width: 1180px){
     .hero-image{
-      aspect-ratio:4/3;
       background-image:url('ajyal-hero-ipad.png');
     }
     #screenForm{
@@ -251,7 +250,6 @@
   /* Mobile phones */
   @media (max-width: 600px){
     .hero-image{
-      aspect-ratio:941/1672;
       background-image:url('ajyal-hero-mobile.png');
     }
     #screenForm{
@@ -261,6 +259,7 @@
       background-position:top center;
     }
     .path-btn{ padding:14px 34px; }
+    .path-hint{ font-size:12px; }
   }
   @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
 </style>
